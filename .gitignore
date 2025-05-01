@@ -8,3 +8,4 @@
 /GradReserch/app/main/source/
 /GradReserch/app/inferApp/test_audios/
 /GradReserch/app/inferApp/model_assets/
+*.class
