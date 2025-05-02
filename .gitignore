@@ -1,11 +1,17 @@
 .idea
-*.safetensors
-*.7z
 **/venv/
-/GradReserch/model_assets/
-/GradReserch/dataset/
-/GradReserch/app/main/audios/
-/GradReserch/app/main/source/
-/GradReserch/app/inferApp/test_audios/
-/GradReserch/app/inferApp/model_assets/
-*.class
+
+# ========================
+# Java
+**/*.class
+*.7z
+*.safetensors
+
+# IDE / ビルド
+/bin/
+/out/
+/target/
+*.jar
+*.war
+# ========================
+
