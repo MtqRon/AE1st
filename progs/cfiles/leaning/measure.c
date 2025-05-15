@@ -9,6 +9,7 @@
 typedef void (*sort_fn)(int*, size_t);
 extern void bubble_sort(int*, size_t);
 extern void insertion_sort(int*, size_t);
+extern void quick_sort(int*, size_t);
 
 void fill_random(int *a, size_t n) {
     for (size_t i = 0; i < n; ++i) a[i] = rand();
@@ -34,9 +35,16 @@ double bench(sort_fn f,size_t n){
 
 int main(int argc,char**argv){
     if(argc!=3){
-        fprintf(stderr,"usage: %s <bubble|insertion> <size>\n",argv[0]);return 1;}
+        fprintf(stderr,"usage: %s <bubble|insertion|quick> <size>\n",argv[0]);return 1;}
     size_t n=strtoul(argv[2],NULL,10);
-    sort_fn f=!strcmp(argv[1],"bubble")?bubble_sort:insertion_sort;
+    sort_fn f;
+    if(!strcmp(argv[1],"bubble")) f = bubble_sort;
+    else if(!strcmp(argv[1],"insertion")) f = insertion_sort;
+    else if(!strcmp(argv[1],"quick")) f = quick_sort;
+    else {
+        fprintf(stderr,"Unknown sort: %s\n",argv[1]);
+        return 1;
+    }
     printf("%zu,%f\n",n,bench(f,n));
     return 0;
 }
