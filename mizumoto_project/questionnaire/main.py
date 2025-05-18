@@ -2,6 +2,14 @@ import matplotlib.pyplot as plt
 from sheets import getData, getlines
 import matplotlib as mpl
 from abc import ABC, abstractmethod
+from settings import (
+    SEX_LABEL, AGE_LABEL, PREFECTURE_LABEL,
+    SEX_CATEGORIES, AGE_CATEGORIES, PREFECTURE_CATEGORIES,
+    PREFECTURE_COORDINATES
+)
+import webbrowser, os
+import leafmap.foliumap as leafmap
+import pandas as pd
 
 # 日本語フォントの設定
 plt.rcParams['font.family'] = 'MS Gothic'  # Windowsの場合
@@ -31,29 +39,18 @@ class CountSexData(CountData):
     """性別データ集計の具象クラス"""
     
     def __init__(self):
-        self.sex_counts = {
-            "Male": 0,
-            "Female": 0,
-            "Other": 0,
-            "No answer": 0
-        }
+        self.sex_counts = {v: 0 for v in SEX_CATEGORIES.values()}
     
     def count(self):
         """性別データを集計する"""
         for i in range(2, getlines):  # 2行目から開始（ヘッダーをスキップ）
-            sex = getData(i, "sex")
+            sex = getData(i, SEX_LABEL)
             # 空白の行はスキップ
             if not sex or sex.strip() == "":
                 continue
             # 日本語から英語への変換
-            if sex == "男性":
-                self.sex_counts["Male"] += 1
-            elif sex == "女性":
-                self.sex_counts["Female"] += 1
-            elif sex == "どちらでもない":
-                self.sex_counts["Other"] += 1
-            elif sex == "回答しない/その他":
-                self.sex_counts["No answer"] += 1
+            if sex in SEX_CATEGORIES:
+                self.sex_counts[SEX_CATEGORIES[sex]] += 1
         
         return self.sex_counts
 
@@ -61,20 +58,12 @@ class CountAgeData(CountData):
     """年齢データ集計の具象クラス"""
     
     def __init__(self):
-        self.age_counts = {
-            "Under 19": 0,
-            "20-29": 0,
-            "30-39": 0,
-            "40-49": 0,
-            "50-59": 0,
-            "60-69": 0,
-            "Over 70": 0
-        }
+        self.age_counts = {k: 0 for k in AGE_CATEGORIES.keys()}
     
     def count(self):
         """年齢データを集計する"""
         for i in range(2, getlines):  # 2行目から開始（ヘッダーをスキップ）
-            age = getData(i, "age")
+            age = getData(i, AGE_LABEL)
             # 空白の行はスキップ
             if not age or age.strip() == "":
                 continue
@@ -98,6 +87,25 @@ class CountAgeData(CountData):
                 continue
         
         return self.age_counts
+
+class CountPrefectureData(CountData):
+    """都道府県データ集計の具象クラス"""
+    
+    def __init__(self):
+        self.prefecture_counts = {v: 0 for v in PREFECTURE_CATEGORIES.values()}
+    
+    def count(self):
+        for i in range(2, getlines):
+            prefecture = getData(i, PREFECTURE_LABEL)
+
+            # ① 取得失敗や空欄をまとめて無視
+            if prefecture in ("", None, "error"):
+                continue
+
+            # ② 日本語 → 英語に変換してカウント
+            if prefecture in PREFECTURE_CATEGORIES:
+                self.prefecture_counts[PREFECTURE_CATEGORIES[prefecture]] += 1
+        return self.prefecture_counts
 
 class PlotSexData(PlotData):
     """性別データプロットの具象クラス"""
@@ -152,6 +160,48 @@ class PlotAgeData(PlotData):
         plt.tight_layout()
         plt.show()
 
+class PlotPrefectureData(PlotData):
+    """都道府県データプロットの具象クラス"""
+    
+    def plot(self):
+        """都道府県データをヒートマップでプロットする"""
+        # データの取得
+        prefecture_counts = self.count_data.count()
+        
+        # データフレームの作成
+        data = []
+        for prefecture, count in prefecture_counts.items():
+            if count > 0 and prefecture in PREFECTURE_COORDINATES:
+                coords = PREFECTURE_COORDINATES[prefecture]
+                data.append({
+                    'lat': coords['lat'],
+                    'lon': coords['lon'],
+                    'count': count
+                })
+        
+        df = pd.DataFrame(data)
+        
+        # 地図の作成
+        m = leafmap.Map(center=[36.5, 138.0], zoom=5)
+        
+        # ヒートマップの追加
+        m.add_heatmap(
+            df,
+            latitude='lat',
+            longitude='lon',
+            value='count',
+            name='Prefecture Distribution',
+            radius=20,
+        )
+        
+        # 地図の表示
+        html_path = "prefecture_heatmap.html"
+        m.to_html(html_path)          # Leafmap推奨の書き出しメソッド
+        print(f'ヒートマップを {html_path} に保存しました。')
+
+        # Windows・Macならブラウザを自動起動
+        webbrowser.open('file://' + os.path.realpath(html_path))
+
 if __name__ == "__main__":
     # 性別データの集計とプロット
     count_sex = CountSexData()
@@ -162,3 +212,8 @@ if __name__ == "__main__":
     count_age = CountAgeData()
     plot_age = PlotAgeData(count_age)
     plot_age.plot()
+    
+    # 都道府県データの集計とプロット
+    count_prefecture = CountPrefectureData()
+    plot_prefecture = PlotPrefectureData(count_prefecture)
+    plot_prefecture.plot() 
