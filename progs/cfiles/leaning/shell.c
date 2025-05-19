@@ -12,7 +12,7 @@ void shell_sort(int *a, size_t n){
             size_t j = i;
             //挿入ソートgap飛びの数列のうち，挿入に適切な位置を要素をずらして開け，そこに挿入する．
             while(j >= gap && a[j - gap] > tmp){
-                a[j] = a[j - gap]
+                a[j] = a[j - gap];
                 a[j - gap] = tmp;
                 j -= gap;
             }
