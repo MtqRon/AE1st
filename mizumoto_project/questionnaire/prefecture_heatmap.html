@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_a4b6664687d9dd4c157d15ee270cbe96 {
+                #map_b6ae6c1ecdb959e19fa734ed8b65820f {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -59,14 +59,14 @@
 <body>
     
     
-            <div class="folium-map" id="map_a4b6664687d9dd4c157d15ee270cbe96" ></div>
+            <div class="folium-map" id="map_b6ae6c1ecdb959e19fa734ed8b65820f" ></div>
         
 </body>
 <script>
     
     
-            var map_a4b6664687d9dd4c157d15ee270cbe96 = L.map(
-                "map_a4b6664687d9dd4c157d15ee270cbe96",
+            var map_b6ae6c1ecdb959e19fa734ed8b65820f = L.map(
+                "map_b6ae6c1ecdb959e19fa734ed8b65820f",
                 {
                     center: [36.5, 138.0],
                     crs: L.CRS.EPSG3857,
@@ -80,13 +80,13 @@
 
                 }
             );
-            L.control.scale().addTo(map_a4b6664687d9dd4c157d15ee270cbe96);
+            L.control.scale().addTo(map_b6ae6c1ecdb959e19fa734ed8b65820f);
 
             
 
         
     
-            var tile_layer_0015ed58899304d64a45f73029a1347a = L.tileLayer(
+            var tile_layer_16d761d846634c07ce1fc0cf4b60a237 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -103,7 +103,7 @@
             );
         
     
-            tile_layer_0015ed58899304d64a45f73029a1347a.addTo(map_a4b6664687d9dd4c157d15ee270cbe96);
+            tile_layer_16d761d846634c07ce1fc0cf4b60a237.addTo(map_b6ae6c1ecdb959e19fa734ed8b65820f);
         
     
             L.control.fullscreen(
@@ -113,11 +113,11 @@
   "titleCancel": "Exit Full Screen",
   "forceSeparateButton": false,
 }
-            ).addTo(map_a4b6664687d9dd4c157d15ee270cbe96);
+            ).addTo(map_b6ae6c1ecdb959e19fa734ed8b65820f);
         
     
 
-            var geocoderOpts_geocoder_fd1daceee022e31a4c1f29556ea1041b = {
+            var geocoderOpts_geocoder_fab89d11d69f6456bd9453ffb91f723d = {
   "collapsed": true,
   "position": "topleft",
   "defaultMarkGeocode": true,
@@ -128,35 +128,35 @@
 };
 
             // note: geocoder name should start with lowercase
-            var geocoderName_geocoder_fd1daceee022e31a4c1f29556ea1041b = geocoderOpts_geocoder_fd1daceee022e31a4c1f29556ea1041b["provider"];
+            var geocoderName_geocoder_fab89d11d69f6456bd9453ffb91f723d = geocoderOpts_geocoder_fab89d11d69f6456bd9453ffb91f723d["provider"];
 
-            var customGeocoder_geocoder_fd1daceee022e31a4c1f29556ea1041b = L.Control.Geocoder[ geocoderName_geocoder_fd1daceee022e31a4c1f29556ea1041b ](
-                geocoderOpts_geocoder_fd1daceee022e31a4c1f29556ea1041b['providerOptions']
+            var customGeocoder_geocoder_fab89d11d69f6456bd9453ffb91f723d = L.Control.Geocoder[ geocoderName_geocoder_fab89d11d69f6456bd9453ffb91f723d ](
+                geocoderOpts_geocoder_fab89d11d69f6456bd9453ffb91f723d['providerOptions']
             );
-            geocoderOpts_geocoder_fd1daceee022e31a4c1f29556ea1041b["geocoder"] = customGeocoder_geocoder_fd1daceee022e31a4c1f29556ea1041b;
+            geocoderOpts_geocoder_fab89d11d69f6456bd9453ffb91f723d["geocoder"] = customGeocoder_geocoder_fab89d11d69f6456bd9453ffb91f723d;
 
             L.Control.geocoder(
-                geocoderOpts_geocoder_fd1daceee022e31a4c1f29556ea1041b
+                geocoderOpts_geocoder_fab89d11d69f6456bd9453ffb91f723d
             ).on('markgeocode', function(e) {
-                var zoom = geocoderOpts_geocoder_fd1daceee022e31a4c1f29556ea1041b['zoom'] || map_a4b6664687d9dd4c157d15ee270cbe96.getZoom();
-                map_a4b6664687d9dd4c157d15ee270cbe96.setView(e.geocode.center, zoom);
-            }).addTo(map_a4b6664687d9dd4c157d15ee270cbe96);
+                var zoom = geocoderOpts_geocoder_fab89d11d69f6456bd9453ffb91f723d['zoom'] || map_b6ae6c1ecdb959e19fa734ed8b65820f.getZoom();
+                map_b6ae6c1ecdb959e19fa734ed8b65820f.setView(e.geocode.center, zoom);
+            }).addTo(map_b6ae6c1ecdb959e19fa734ed8b65820f);
 
         
     
-            map_a4b6664687d9dd4c157d15ee270cbe96.fitBounds(
+            map_b6ae6c1ecdb959e19fa734ed8b65820f.fitBounds(
                 [[36.5, 138.0], [36.5, 138.0]],
                 {"maxZoom": 5}
             );
         
     
-            var feature_group_f6e0de2c82871c804761f299bee3b252 = L.featureGroup(
+            var feature_group_de0a8e2de92359e30a5ad1190e52ca63 = L.featureGroup(
                 {
 }
             );
         
     
-            var heat_map_f06e5602c4ebcc443123bab4f6b67057 = L.heatLayer(
+            var heat_map_432e6fcc10932622f35914e59b51a9ed = L.heatLayer(
                 [[39.7186, 140.102401, 2.0], [37.760799, 140.474709, 1.0], [36.565725, 139.883565, 1.0], [33.590184, 130.401689, 2.0], [32.750286, 129.877667, 1.0], [32.789828, 130.741667, 4.0]],
                 {
   "minOpacity": 0.5,
@@ -167,29 +167,29 @@
             );
         
     
-            heat_map_f06e5602c4ebcc443123bab4f6b67057.addTo(feature_group_f6e0de2c82871c804761f299bee3b252);
+            heat_map_432e6fcc10932622f35914e59b51a9ed.addTo(feature_group_de0a8e2de92359e30a5ad1190e52ca63);
         
     
-            feature_group_f6e0de2c82871c804761f299bee3b252.addTo(map_a4b6664687d9dd4c157d15ee270cbe96);
+            feature_group_de0a8e2de92359e30a5ad1190e52ca63.addTo(map_b6ae6c1ecdb959e19fa734ed8b65820f);
         
     
-            var layer_control_9774debfd5039526069af2fdb3e34c8e_layers = {
+            var layer_control_e5d801c6f45a459dac9d2121802bcc1e_layers = {
                 base_layers : {
-                    "openstreetmap" : tile_layer_0015ed58899304d64a45f73029a1347a,
+                    "openstreetmap" : tile_layer_16d761d846634c07ce1fc0cf4b60a237,
                 },
                 overlays :  {
-                    "Prefecture Distribution" : feature_group_f6e0de2c82871c804761f299bee3b252,
+                    "Prefecture Distribution" : feature_group_de0a8e2de92359e30a5ad1190e52ca63,
                 },
             };
-            let layer_control_9774debfd5039526069af2fdb3e34c8e = L.control.layers(
-                layer_control_9774debfd5039526069af2fdb3e34c8e_layers.base_layers,
-                layer_control_9774debfd5039526069af2fdb3e34c8e_layers.overlays,
+            let layer_control_e5d801c6f45a459dac9d2121802bcc1e = L.control.layers(
+                layer_control_e5d801c6f45a459dac9d2121802bcc1e_layers.base_layers,
+                layer_control_e5d801c6f45a459dac9d2121802bcc1e_layers.overlays,
                 {
   "position": "topright",
   "collapsed": true,
   "autoZIndex": true,
 }
-            ).addTo(map_a4b6664687d9dd4c157d15ee270cbe96);
+            ).addTo(map_b6ae6c1ecdb959e19fa734ed8b65820f);
 
         
 </script>

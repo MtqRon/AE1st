@@ -9,6 +9,7 @@
 typedef void (*sort_fn)(int*, size_t);
 extern void bubble_sort(int*, size_t);
 extern void insertion_sort(int*, size_t);
+extern void shell_sort(int*, size_t);
 //extern void quick_sort(int*, size_t);
 
 void fill_random(int *a, size_t n) {
@@ -40,6 +41,7 @@ int main(int argc,char**argv){
     sort_fn f;
     if(!strcmp(argv[1],"bubble")) f = bubble_sort;
     else if(!strcmp(argv[1],"insertion")) f = insertion_sort;
+    else if(!strcmp(argv[1],"shell")) f = shell_sort;
     //else if(!strcmp(argv[1],"quick")) f = quick_sort;
     else {
         fprintf(stderr,"Unknown sort: %s\n",argv[1]);
