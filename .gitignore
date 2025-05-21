@@ -1,12 +1,13 @@
 .idea
 **/venv/
+*.7z
+*.safetensors
+*.json
+*.exe
 
 # ========================
 # Java
 **/*.class
-*.7z
-*.safetensors
-*.json
 
 # IDE / ビルド
 /bin/
