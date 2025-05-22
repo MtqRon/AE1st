@@ -14,3 +14,14 @@ void merge_sort_rec(int *a, int *tmp, size_t left, size_t right){
 
     while(i = left; i < right; i++) a[i++] = tmp[i++];
 }
+
+void merge_sort(int *a, size_t n){
+    if(n < 2) return;
+
+    int *tmp = malloc(n * sizeof(*tmp));
+    if(!tmp) return;
+    
+    merge_sort_rec(a,tmp,0,n);
+
+    free(tmp);
+}
