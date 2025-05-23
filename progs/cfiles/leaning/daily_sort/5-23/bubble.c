@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <stdbool.h>
-#define SWAP(x,y,s) do(int _t = (x); (x) = (y); (y) = _t; (s) = true;)
+#define SWAP(x,y,s) do{int _t = (x); (x) = (y); (y) = _t; (s) = true;}while(0)
 void bubble_sort(int *a, size_t n){
     if(n < 2) return;
     bool swapped;
@@ -9,6 +9,7 @@ void bubble_sort(int *a, size_t n){
         for(size_t j = n - 1; j > 0; j--){
             if(a[j - 1] > a[j]) SWAP(a[j - 1],a[j],swapped);
         }
+        if(!swapped) break;
     }
-    if(!swapped) break;
+
 }
