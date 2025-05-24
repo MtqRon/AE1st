@@ -1,0 +1,14 @@
+#include <stddef.h>
+
+void insertion_sort(int *a, size_t n){
+    if(n < 2) return;
+    for(size_t i = 1; i < n; i++){
+        size_t j = i;
+        int key = a[i];
+        while(j > 0 && a[j - 1] > key){
+            a[j] = a[j - 1];
+            j--;
+        }
+        a[j] = key;
+    }
+}

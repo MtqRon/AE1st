@@ -3,17 +3,15 @@
 
 void counting_sort(int *a, size_t n, int k){
     if(n < 2) return;
-
     int *cnt = calloc(k, sizeof(*cnt));
     if(!cnt) return;
 
-    for(size_t i = 0; i < k; i++){
+    for(size_t i = 0; i < n; i++){
         cnt[a[i]]++;
     }
 
-
-    for(size_t j = 0; j < k; j++){
-        cnt[j] += cnt[j - 1];
+    for(size_t i = 1; i < k; i++){
+        cnt[i] += cnt[i - 1];
     }
 
     int *out = malloc(n * sizeof(*out));
@@ -23,9 +21,9 @@ void counting_sort(int *a, size_t n, int k){
     }
 
     for(size_t i = n; i > 0; i--){
-        int key = a[i - 1];
-        cnt[key]--;
-        out[cnt[key]] = key;
+        int tmp = a[i - 1];
+        cnt[tmp]--;
+        out[cnt[tmp]] = tmp;
     }
 
     for(size_t i = 0; i < n; i++){

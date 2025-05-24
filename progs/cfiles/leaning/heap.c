@@ -6,7 +6,7 @@ static void heapify(int *a, size_t from, size_t to);
 void build_max_heap(int *a, size_t n){
     //n/2からが子を持つ節となるので，そこからヒープ化スタート
     //右下から順々にヒープにしていく．
-    for (size_t i = n/2; i > 0; i--) {
+    for (size_t i = n/2; i > 0; i--) {,
         heapify(a, i-1, n-1);
     }
 }
