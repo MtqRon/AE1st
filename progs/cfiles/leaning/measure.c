@@ -12,6 +12,7 @@ extern void shell_sort(int*, size_t);
 extern void merge_sort(int*, size_t);
 extern void heap_sort(int*, size_t);
 extern void counting_sort(int*, size_t, int);
+extern void radix_sort(int*, size_t);
 
 void fill_random(int *a, size_t n) {
     for (size_t i = 0; i < n; ++i) {
@@ -90,6 +91,8 @@ int main(int argc, char **argv){
         }
         int k = atoi(argv[3]);
         elapsed = bench_counting(counting_sort, n, k);
+    } else if (!strcmp(argv[1],"radix")){
+        elapsed = bench(radix_sort, n);
     } else {
         fprintf(stderr, "Unknown sort: %s\n", argv[1]);
         return 1;
