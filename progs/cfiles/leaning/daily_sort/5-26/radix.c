@@ -10,7 +10,7 @@ static void counting_digit_sort(int *a, size_t n, size_t exp, size_t k, size_t *
         cnt[i] += cnt[i - 1];
     }
 
-    for(size_t i = n; i > 0; i++){
+    for(size_t i = n; i > 0; i--){
         int key = a[i - 1];
         out[--cnt[(key/exp)%k]] = key;
     }

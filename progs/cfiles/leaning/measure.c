@@ -91,7 +91,7 @@ int main(int argc, char **argv){
         }
         int k = atoi(argv[3]);
         elapsed = bench_counting(counting_sort, n, k);
-    } else if (!strcmp(argv[1],"radix")){
+    } else if (!strcmp(argv[1],"radix")) {
         elapsed = bench(radix_sort, n);
     } else {
         fprintf(stderr, "Unknown sort: %s\n", argv[1]);
