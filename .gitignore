@@ -4,6 +4,7 @@
 *.safetensors
 *.json
 *.exe
+*.html
 
 # ========================
 # Java
