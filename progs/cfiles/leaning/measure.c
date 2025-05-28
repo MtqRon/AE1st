@@ -20,6 +20,12 @@ void fill_random(int *a, size_t n) {
     }
 }
 
+void fill_random_range(int *a, size_t n, int k) {
+    for (size_t i = 0; i < n; ++i) {
+        a[i] = rand() % k;  // 0からk-1の範囲の値を生成
+    }
+}
+
 bool is_sorted(int *a, size_t n) {
     for (size_t i = 1; i < n; ++i) {
         if (a[i - 1] > a[i]) {
@@ -52,7 +58,7 @@ double bench_counting(void (*f)(int*, size_t, int), size_t n, int k){
         perror("malloc");
         exit(EXIT_FAILURE);
     }
-    fill_random(a, n);
+    fill_random_range(a, n, k);  // 範囲指定のランダム生成を使用
 
     clock_t st = clock();
     f(a, n, k);
