@@ -34,7 +34,7 @@ void radix_sort(int *a, size_t n){
     if(!out){ free(cnt); return;}
 
     for(size_t exp = 1; max/exp > 0; exp *= 10){
-        memset(cnt, 0, k * sizeof(*cnt));
+        memset(cnt, 0, sizeof(*cnt));
         counting_digit_sort(a, n, cnt, out, exp, k);
     }
 
