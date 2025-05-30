@@ -4,6 +4,8 @@
 *.safetensors
 *.json
 *.exe
+*.mp4
+**/output/
 
 # ========================
 # Java
