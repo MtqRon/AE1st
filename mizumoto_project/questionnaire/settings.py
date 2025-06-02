@@ -2,6 +2,8 @@
 SEX_LABEL        = "sex"
 AGE_LABEL        = "age"
 PREFECTURE_LABEL = "region"
+PURPOSE_LABEL    = "purpose"
+EVALUATION_LABEL = "evaluation"
 
 
 # 性別のラベル
@@ -123,4 +125,22 @@ PREFECTURE_COORDINATES = {
     "Miyazaki": {"lat": 31.911090, "lon": 131.423855},
     "Kagoshima": {"lat": 31.560148, "lon": 130.558157},
     "Okinawa": {"lat": 26.212401, "lon": 127.680932}
-} 
+}
+
+# 来園目的のラベル
+PURPOSE_CATEGORIES = {
+    "自家用購入": "Personal Purchase",
+    "贈答用購入": "Gift Purchase",
+    "体験イベント": "Experience Event",
+    "観光・見学のみ": "Tourism/Observation Only",
+    "その他": "Other"
+}
+
+# 評価のカテゴリ（1～5）
+EVALUATION_CATEGORIES = {
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5
+}
