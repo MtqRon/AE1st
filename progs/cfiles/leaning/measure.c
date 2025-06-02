@@ -7,6 +7,7 @@
 
 typedef void (*sort_fn)(int*, size_t);
 extern void bubble_sort(int*, size_t);
+extern void selection_sort(int*, size_t);
 extern void insertion_sort(int*, size_t);
 extern void shell_sort(int*, size_t);
 extern void merge_sort(int*, size_t);
@@ -82,6 +83,8 @@ int main(int argc, char **argv){
 
     if (!strcmp(argv[1], "bubble")) {
         elapsed = bench(bubble_sort, n);
+    } else if (!strcmp(argv[1], "selection")){
+        elapsed = bench(selection_sort, n);
     } else if (!strcmp(argv[1], "insertion")) {
         elapsed = bench(insertion_sort, n);
     } else if (!strcmp(argv[1], "shell")) {
