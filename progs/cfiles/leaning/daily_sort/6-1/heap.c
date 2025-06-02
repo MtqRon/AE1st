@@ -32,8 +32,8 @@ void heap_sort(int *a, size_t n){
 
     init_heap(a, n);
 
-    for(size_t end = n; n > 1; n--){
+    for(size_t end = n; end > 1; end--){
         heap_swap(&a[0], &a[end - 1]);
-        heapify(a, 0, ent - 2);
+        heapify(a, 0, end - 2);
     }
 }
