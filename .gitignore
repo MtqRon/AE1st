@@ -4,12 +4,8 @@
 *.safetensors
 *.json
 *.exe
-<<<<<<< HEAD
 *.mp4
 **/output/
-=======
-*.html
->>>>>>> ae329cd8a4c0e339256a9a4a9c36fc76fec39964
 
 # ========================
 # Java
