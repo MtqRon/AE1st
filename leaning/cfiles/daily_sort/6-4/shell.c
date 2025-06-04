@@ -7,7 +7,7 @@ void shell_sort(int *a, size_t n){
         for(size_t i = gap; i < n; i++){
             int key = a[i];
             size_t j = i;
-            for(; j > 0 && a[j - gap] > a[j]; j -= gap) a[j] = a[j - gap];
+            for(; j >= gap && a[j - gap] > key; j -= gap) a[j] = a[j - gap];
             a[j] = key;
         }
     }
