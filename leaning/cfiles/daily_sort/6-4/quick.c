@@ -15,27 +15,16 @@ int partition(int *a, int low, int high) {
 void quick_sort(int *a, int n)
 {
     // スタック手動管理で末尾再帰最適化
-    //-1のとき中身は空
     int stack[32]; int top = -1;
-
-    //今処理中の区間の左端
-    int low = 0;
-    //今処理中の区間の右端
-    int high = n - 1;
-
-    //スタックに区間全体をプッシュする．
-    //スタックは2こセット[low][high]の順
+    int low = 0, high = n - 1;
     stack[++top] = low; stack[++top] = high;
 
-    //スタックがなくなるまで繰り返す（>=0で0まで実行される）
     while (top >= 0) {
         //スタックからポップする
         high = stack[top--];
         low  = stack[top--];
 
-        //
         while (low < high) {
-            //枢軸で分割．
             int mid = partition(a, low, high);
 
             // 小さい側を先に / 大きい側をスタックへ
