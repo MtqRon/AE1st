@@ -1,0 +1,6 @@
+# Required libraries for PDF to image conversion (PyMuPDF version)
+PyMuPDF>=1.23.0
+Pillow>=10.0.0
+
+# Optional: Progress display
+tqdm>=4.65.0
