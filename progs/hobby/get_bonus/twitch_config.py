@@ -5,5 +5,5 @@ CLIENT_ID = "mqalh26s3xf0hbfidughclvwt4x175"
 CLIENT_SECRET = "vvik1nqlgaqlelazuo0lb9p58tjl7z"
 
 # 監視設定
-STREAMER_NAME = "nyancakew"
+STREAMER_NAME = "kato_junichi0817"
 CHECK_INTERVAL = 180  # チェック間隔（秒）
