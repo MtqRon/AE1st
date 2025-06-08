@@ -6,7 +6,7 @@ static void heapify(int *a, size_t from, size_t to);
 
 static void init_heap(int *a, size_t n){
     for(size_t i = n / 2; i > 0; i--){
-        heapify(a, i - 1; n - 1);
+        heapify(a, i - 1, n - 1);
     }
 }
 
@@ -33,7 +33,7 @@ void heap_sort(int *a, size_t n){
 
     init_heap(a, n);
 
-    for(end = n; end > 1; end--){
+    for(size_t end = n; end > 1; end--){
         swap(&a[0], &a[end - 1]);
         heapify(a, 0, end - 2);
     }
