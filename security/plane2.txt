@@ -1,0 +1,4 @@
+Normally, we use the standard basis, but it is also possible to use other bases (the components used for representation).
+When the basis (the components for representation) changes, the matrix representation (the blueprint) of a linear map also changes.
+The representation matrix is uniquely determined only after specifying the bases for both the input and output sides.
+Even if the basis (components) and the representation matrix (blueprint) change, the operation being performed (the final product) remains the same.

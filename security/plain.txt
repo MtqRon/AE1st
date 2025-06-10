@@ -1,0 +1,3 @@
+A real symmetric matrix can always be diagonalized by an orthogonal matrix.
+In particular, when the eigenvalues are non-repeated, the corresponding eigenvectors are already orthogonal, so an orthogonal matrix can be formed simply by normalizing each eigenvector.
+Even in the case of repeated eigenvalues, it is possible to construct an orthogonal matrix by applying the Gram-Schmidt orthogonalization process to the eigenvectors corresponding to the repeated eigenvalues.
