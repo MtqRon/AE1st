@@ -27,10 +27,9 @@ from PIL import Image
 def pdf_to_images_pymupdf(pdf_path, output_dir=None, output_format='png', dpi=300, quality=95):
     """
     PDFファイルを画像に変換する（PyMuPDF版）
-    
-    Args:
+      Args:
         pdf_path (str): PDFファイルのパス
-        output_dir (str): 出力ディレクトリ（Noneの場合、PDFと同じディレクトリ）
+        output_dir (str): 出力ディレクトリ（Noneの場合、outputディレクトリ）
         output_format (str): 出力フォーマット（'png' または 'jpeg'）
         dpi (int): 解像度（DPI）
         quality (int): JPEG品質（1-100、PNGの場合は無視）
@@ -41,12 +40,10 @@ def pdf_to_images_pymupdf(pdf_path, output_dir=None, output_format='png', dpi=30
       # PDFファイルの存在確認
     if not os.path.exists(pdf_path):
         raise FileNotFoundError(f"PDFファイルが見つかりません: {pdf_path}")
-    
-    # 出力ディレクトリの設定
+      # 出力ディレクトリの設定
     if output_dir is None:
-        output_dir = os.path.dirname(os.path.abspath(pdf_path))
-        if not output_dir:  # 空文字列の場合は現在のディレクトリを使用
-            output_dir = os.getcwd()
+        # デフォルトでoutputディレクトリを使用
+        output_dir = os.path.join(os.getcwd(), "output")
     
     # 出力ディレクトリの作成
     os.makedirs(output_dir, exist_ok=True)
@@ -102,21 +99,21 @@ def pdf_to_images_pymupdf(pdf_path, output_dir=None, output_format='png', dpi=30
 def images_to_pdf(image_pattern, output_pdf=None, output_dir=None):
     """
     画像ファイルをPDFに変換する
-    
-    Args:
+      Args:
         image_pattern (str): 画像ファイルのパターン（例: "*.png", "image_*.jpg"）
         output_pdf (str): 出力PDFファイル名（Noneの場合は自動生成）
-        output_dir (str): 出力ディレクトリ（Noneの場合は現在のディレクトリ）
+        output_dir (str): 出力ディレクトリ（Noneの場合はoutputディレクトリ）
     
     Returns:
         str: 作成されたPDFファイルのパス
     """
-    
-    # 画像ファイルを検索
+      # 画像ファイルを検索
     if os.path.isabs(image_pattern):
         image_files = glob.glob(image_pattern)
     else:
-        image_files = glob.glob(os.path.join(os.getcwd(), image_pattern))
+        # デフォルトでinputディレクトリから検索
+        input_dir = os.path.join(os.getcwd(), "input")
+        image_files = glob.glob(os.path.join(input_dir, image_pattern))
     
     if not image_files:
         raise FileNotFoundError(f"画像ファイルが見つかりません: {image_pattern}")
@@ -126,7 +123,8 @@ def images_to_pdf(image_pattern, output_pdf=None, output_dir=None):
     
     # 出力ディレクトリの設定
     if output_dir is None:
-        output_dir = os.getcwd()
+        # デフォルトでoutputディレクトリを使用
+        output_dir = os.path.join(os.getcwd(), "output")
     
     os.makedirs(output_dir, exist_ok=True)
     
@@ -251,13 +249,12 @@ def interactive_mode():
 def pdf_to_image_interactive():
     """PDF→画像変換の対話モード"""
     print("\n--- PDFを画像に変換 ---")
-    
-    # PDFファイルの選択
-    current_dir = os.getcwd()
-    pdf_files = list(Path(current_dir).glob('*.pdf'))
+      # PDFファイルの選択
+    input_dir = os.path.join(os.getcwd(), "input")
+    pdf_files = list(Path(input_dir).glob('*.pdf'))
     
     if not pdf_files:
-        print("現在のディレクトリにPDFファイルが見つかりません。")
+        print("inputディレクトリにPDFファイルが見つかりません。")
         pdf_path = input("PDFファイルのパスを入力してください: ").strip()
         if not pdf_path or not os.path.exists(pdf_path):
             print("無効なファイルパスです。")
@@ -325,16 +322,15 @@ def pdf_to_image_interactive():
 def image_to_pdf_interactive():
     """画像→PDF変換の対話モード"""
     print("\n--- 画像をPDFに変換 ---")
-    
-    # 画像ファイルパターンの入力
-    current_dir = os.getcwd()
+      # 画像ファイルパターンの入力
+    input_dir = os.path.join(os.getcwd(), "input")
     
     # 利用可能な画像ファイルを表示
-    png_files = list(Path(current_dir).glob('*.png'))
-    jpg_files = list(Path(current_dir).glob('*.jpg')) + list(Path(current_dir).glob('*.jpeg'))
+    png_files = list(Path(input_dir).glob('*.png'))
+    jpg_files = list(Path(input_dir).glob('*.jpg')) + list(Path(input_dir).glob('*.jpeg'))
     
     if png_files or jpg_files:
-        print("\n現在のディレクトリの画像ファイル:")
+        print("\ninputディレクトリの画像ファイル:")
         if png_files:
             print(f"  PNG: {len(png_files)} ファイル")
         if jpg_files:
@@ -373,69 +369,70 @@ def main():
     """メイン関数"""
     parser = argparse.ArgumentParser(
         description="PDF⇔画像変換プログラム（PyMuPDF版）",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
+        formatter_class=argparse.RawDescriptionHelpFormatter,        epilog="""
 使用例:
-    # 基本的な使用方法（PNG形式、300DPI）
-    python pdf_to_image_pymupdf.py document.pdf
+    # inputディレクトリのPDFを自動検出して変換（PNG形式、300DPI）
+    python pdf_to_image_pymupdf.py
+    
+    # 特定のPDFファイルを指定して変換
+    python pdf_to_image_pymupdf.py input/document.pdf
     
     # JPEG形式で変換
-    python pdf_to_image_pymupdf.py document.pdf --format jpeg
+    python pdf_to_image_pymupdf.py --format jpeg
     
     # 高解像度（600DPI）で変換
-    python pdf_to_image_pymupdf.py document.pdf --dpi 600
+    python pdf_to_image_pymupdf.py --dpi 600
     
     # 出力ディレクトリを指定
-    python pdf_to_image_pymupdf.py document.pdf --output images/
+    python pdf_to_image_pymupdf.py --output custom_output/
     
     # JPEG品質を指定
-    python pdf_to_image_pymupdf.py document.pdf --format jpeg --quality 85
+    python pdf_to_image_pymupdf.py --format jpeg --quality 85
         """
     )
     
     parser.add_argument(
-        'pdf_file',
-        nargs='?',
+        'pdf_file',        nargs='?',
         help='変換するPDFファイルのパス'
     )
     
     parser.add_argument(
         '--output', '-o',
         type=str,
-        help='出力ディレクトリ（指定しない場合はPDFと同じディレクトリ）'
+        help='出力ディレクトリ（指定しない場合はoutputディレクトリ）'
     )
     
-    parser.add_argument(
-        '--format', '-f',
-        choices=['png', 'jpeg'],        default='png',
+    parser.add_argument(        '--format', '-f',
+        choices=['png', 'jpeg'],
+        default='png',
         help='出力フォーマット（デフォルト: png）'
     )
     
     parser.add_argument(
         '--dpi', '-d',
         type=int,
-        default=600,
+        default=300,
         help='解像度（DPI）（デフォルト: 300）'
     )
     
     parser.add_argument(
         '--quality', '-q',
         type=int,
-        default=100,
+        default=95,
         help='JPEG品質 1-100（デフォルト: 95）'
     )
     
     args = parser.parse_args()
-    
-    # PDFファイルが指定されていない場合
+      # PDFファイルが指定されていない場合
     if not args.pdf_file:
-        # ワークスペース内のPDFファイルを探す
-        current_dir = os.getcwd()
-        pdf_files = list(Path(current_dir).glob('*.pdf'))
+        # inputディレクトリ内のPDFファイルを探す
+        input_dir = os.path.join(os.getcwd(), "input")
+        pdf_files = list(Path(input_dir).glob('*.pdf'))
         
         if not pdf_files:
-            print("PDFファイルが見つかりません。")
+            print("inputディレクトリにPDFファイルが見つかりません。")
             print("使用方法: python pdf_to_image_pymupdf.py [PDF_FILE_PATH]")
+            print("または、inputディレクトリにPDFファイルを配置してください。")
             sys.exit(1)
         elif len(pdf_files) == 1:
             args.pdf_file = str(pdf_files[0])
