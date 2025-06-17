@@ -13,6 +13,7 @@ extern void shell_sort(int*, size_t);
 extern void merge_sort(int*, size_t);
 extern void quick_sort(int*, size_t);
 extern void heap_sort(int*, size_t);
+extern void bucket_sort(int*, size_t, int);
 extern void counting_sort(int*, size_t, int);
 extern void radix_sort(int*, size_t);
 
@@ -96,6 +97,13 @@ int main(int argc, char **argv){
         elapsed = bench(quick_sort, n);
     } else if (!strcmp(argv[1], "heap")) {
         elapsed = bench(heap_sort, n);
+    }else if(!strcmp(argv[1], "bucket")){
+        if(argc != 4){
+            fprintf(stderr,"usage: %s bucket <size> <k>\n", argv[0]);
+            return 1;
+        }
+        int k = atoi(argv[3]);
+        elapsed = bench_counting(bucket_sort, n, k);   /* counting と同じラッパを流用 */
     } else if (!strcmp(argv[1], "counting")) {
         if (argc != 4) {
             fprintf(stderr, "usage: %s counting <size> <k>\n", argv[0]);
