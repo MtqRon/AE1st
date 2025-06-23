@@ -26,12 +26,15 @@ def preprocess_image(img):
 
 def postprocess_image(img):
     """画像の後処理を行ってアーティファクトを軽減"""
-    # 軽微なシャープ化でアーティファクトによるぼやけを改善
-    kernel = np.array([[-0.5, -0.5, -0.5],
-                       [-0.5,  5.0, -0.5],
-                       [-0.5, -0.5, -0.5]])
-    img = cv2.filter2D(img, -1, kernel * 0.1)  # 効果を軽微に
-    return np.clip(img, 0, 255).astype(np.uint8)
+    # タイルアーティファクトを軽減するための軽微なぼかし処理
+    # シャープ化の代わりに、境界を滑らかにする処理を行う
+    img = cv2.GaussianBlur(img, (3, 3), 0.5)
+    
+    # 軽微なアンシャープマスクで細部を復元
+    blurred = cv2.GaussianBlur(img, (5, 5), 1.0)
+    unsharp_mask = cv2.addWeighted(img, 1.5, blurred, -0.5, 0)
+    
+    return np.clip(unsharp_mask, 0, 255).astype(np.uint8)
 
 
 # 利用可能なモデル設定
@@ -176,31 +179,32 @@ def main():
     elif image_pixels < 500000:  # 0.5MP未満の小さい画像
         use_tile = False
         print("画像が小さいためタイル処理を無効にします")
-    else:
-        # タイルサイズの自動調整
+    else:        # タイルサイズの自動調整
         if args.tile == 0:  # 自動設定
             if image_pixels < 1000000:  # 1MP未満
-                tile_size = min(1200, max(width, height) + 200)
-                tile_pad = 50
+                tile_size = min(1500, max(width, height) + 300)  # より大きなタイルサイズ
+                tile_pad = 100  # より大きなパディング
             elif image_pixels < 4000000:  # 4MP未満
-                tile_size = 800
-                tile_pad = 40
+                tile_size = 1200
+                tile_pad = 80
             elif image_pixels < 10000000:  # 10MP未満
-                tile_size = 600
-                tile_pad = 35
+                tile_size = 1000
+                tile_pad = 60
             else:  # 10MP以上
-                tile_size = 400
-                tile_pad = 32
+                tile_size = 800
+                tile_pad = 50
             print(f"タイルサイズを自動設定: {tile_size} (パディング: {tile_pad})")
         else:
             tile_size = args.tile
-            # タイルサイズに応じてパディングを調整
-            if tile_size >= 800:
-                tile_pad = 50
+            # タイルサイズに応じてパディングを調整（より大きなパディング）
+            if tile_size >= 1000:
+                tile_pad = 100
+            elif tile_size >= 800:
+                tile_pad = 80
             elif tile_size >= 600:
-                tile_pad = 40
+                tile_pad = 60
             else:
-                tile_pad = 32
+                tile_pad = 50
             print(f"タイルサイズ: {tile_size} (パディング: {tile_pad})")
     
     # Real-ESRGANerの初期化

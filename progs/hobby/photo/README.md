@@ -113,16 +113,48 @@ python upscale_image.py -i image.jpg -o output.png --tile 0
 
 ### タイルアーティファクト（ブロック状のノイズ）の軽減
 
-1. **自動タイル調整を使用**: `--tile 0`
-2. **小さい画像ではタイル無効**: `--no-tile`
-3. **タイルサイズを大きくする**: `--tile 800` 以上
-4. **後処理を有効にする**（デフォルトで有効）
+**最も効果的な解決方法（優先順位順）:**
+
+1. **タイル処理を無効にする**（最高品質、メモリ使用量大）:
+   ```bash
+   python upscale_image.py -i image.jpg -o output.png -n RealESRGAN_x2plus --no-tile
+   ```
+
+2. **軽量モデルを使用してタイル無効化**:
+   ```bash
+   # 2倍モデルはメモリ使用量が少ない
+   python upscale_image.py -i image.jpg -o output.png -n RealESRGAN_x2plus --no-tile
+   ```
+
+3. **大きなタイルサイズと高パディングを使用**:
+   ```bash
+   python upscale_image.py -i image.jpg -o output.png --tile 1000
+   ```
+
+4. **自動タイル調整を使用**（推奨設定）:
+   ```bash
+   python upscale_image.py -i image.jpg -o output.png --tile 0
+   ```
 
 ### 画像サイズに応じた推奨設定
 
-- **小さい画像（<0.5MP）**: `--no-tile`
-- **中程度の画像（0.5-4MP）**: `--tile 0`（自動調整）
-- **大きい画像（>4MP）**: `--tile 400` または `--half`
+- **小さい画像（<0.5MP）**: `--no-tile`（必須）
+- **中程度の画像（0.5-2MP）**: `--no-tile` または `--tile 1000`
+- **大きい画像（2-4MP）**: `--tile 0`（自動調整）または `--tile 800`
+- **非常に大きい画像（>4MP）**: `--tile 400` + `--half`
+
+### トラブルシューティング例
+
+```bash
+# タイルアーティファクトが発生した場合
+python upscale_image.py -i image.jpg -o clean_output.png -n RealESRGAN_x2plus --no-tile
+
+# メモリ不足でタイル無効化できない場合
+python upscale_image.py -i image.jpg -o output.png --tile 1200 --half
+
+# それでもアーティファクトが残る場合
+python upscale_image.py -i image.jpg -o output.png --tile 1500 --no-postprocess
+```
 
 ## モデル選択の指針
 
