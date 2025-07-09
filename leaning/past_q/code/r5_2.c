@@ -66,8 +66,31 @@ int odd_to_distinct(int *a){
     }while(a[i] != 0);
 }
 
+
+int odd_to_distinct2(int *a){
+    int i = 0;
+    int j;
+    do{
+        if(a[i] == a[i + 1]){
+            a[i] += a[i + 1];
+            a[i + 1] = 0;
+            i = 0;
+            for(j = 0; j < N; j++){
+                if(a[j] < a[j + 1]){
+                    int tmp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] =tmp;
+                }
+            }
+        }else{
+            i++;
+        }
+
+    }while(a[i] != 0);
+}
+
 void main(){
-    int a[N + 1] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0};
+    int a[N + 1] = {5, 3, 3, 3, 1, 1, 1, 1, 1, 1, 0};
 
     if(!is_all_distinct(a)){
         printf("Initial partition: ");
@@ -80,7 +103,7 @@ void main(){
 
     printf("Execute odd_to_distinct\n");
 
-    odd_to_distinct(a);
+    odd_to_distinct2(a);
 
     printf("Distinct partition: ");
     for(int i = 0; i < N + 1; i++){
