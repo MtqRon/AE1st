@@ -45,6 +45,41 @@ The program will:
 
 The final video will be saved as `output_video.mp4` in the current directory.
 
+## MP4 to WAV Converter
+
+Convert all `.mp4` files in a folder to `.wav` using ffmpeg.
+
+Basic usage (PowerShell):
+
+```powershell
+python .\mp4_to_wav.py .
+```
+
+Options:
+
+- input_dir: Source directory to search for `.mp4`
+- --output-dir: Destination directory for `.wav` (defaults to input_dir)
+- --recursive: Recurse into subfolders
+- --overwrite: Overwrite existing `.wav`
+- --sample-rate: e.g., 16000 or 44100
+- --channels: 1 (mono) or 2 (stereo)
+
+Examples (PowerShell):
+
+```powershell
+# Convert all mp4s in current folder to wavs here
+python .\mp4_to_wav.py .
+
+# Convert from . to .\audio_wav (create if needed)
+python .\mp4_to_wav.py . --output-dir .\audio_wav
+
+# Recurse subfolders and force 16 kHz mono for ASR
+python .\mp4_to_wav.py C:\path\to\videos --recursive --sample-rate 16000 --channels 1
+
+# Overwrite any existing wavs
+python .\mp4_to_wav.py . --overwrite
+```
+
 ## Model Details
 
 ### Transcription Models
