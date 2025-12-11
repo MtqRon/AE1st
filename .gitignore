@@ -20,3 +20,6 @@
 # ========================
 
 "mizumoto_project/questionnare/*.json" 
+chama_project/**/*.md
+chama_project/**/*.py
+chama_project/**/*.txt
