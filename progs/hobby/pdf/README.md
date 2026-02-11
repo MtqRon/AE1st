@@ -26,6 +26,24 @@ pdf/
 pip install PyMuPDF Pillow
 ```
 
+## PDF Merge CLI
+
+`merge_pdfs_pymupdf.py` is a command line tool that merges PDF files from `input/`
+in the exact order you pass on CLI.
+
+```bash
+# default output: output/merged_YYYYMMDD_HHMMSS.pdf
+python merge_pdfs_pymupdf.py file1.pdf file2.pdf
+
+# custom output path
+python merge_pdfs_pymupdf.py file1.pdf file2.pdf -o output/custom_name.pdf
+```
+
+Rules:
+- Input arguments must be PDF filenames located directly under `input/`.
+- At least 2 PDF files are required.
+- If no filename is provided, the command exits with error.
+
 ## 使用方法
 
 ### 1. 基本的な使用方法
